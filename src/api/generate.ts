@@ -1,12 +1,14 @@
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+;
 
+export default async function handler(
+  req: VercelRequest,
+  res: VercelResponse
+) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-dotenv.config();
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-app.post("/api/generate", async (req, res) => {
   try {
     const { goal, users, constraints } = req.body;
 
@@ -69,11 +71,9 @@ Return ONLY valid JSON:
       parsed = JSON.parse(cleaned);
     }
 
-    res.json(parsed);
+    return res.status(200).json(parsed);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to generate spec" });
+    return res.status(500).json({ error: "Failed to generate spec" });
   }
-});
-
-
+}
