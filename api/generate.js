@@ -1,10 +1,4 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-;
-
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -15,29 +9,13 @@ export default async function handler(
     const prompt = `
 You are a senior product architect.
 
-Generate a structured JSON response for:
+Generate structured JSON for:
 
 Goal: ${goal}
 Users: ${users}
 Constraints: ${constraints}
 
-Return ONLY valid JSON:
-
-{
-  "problem": "",
-  "solution": "",
-  "epics": [
-    {
-      "title": "",
-      "userStories": [
-        { "title": "", "description": "" }
-      ],
-      "engineeringTasks": []
-    }
-  ],
-  "risks": [],
-  "unknowns": []
-}
+Return ONLY valid JSON.
 `;
 
     const response = await fetch(
@@ -62,14 +40,8 @@ Return ONLY valid JSON:
       return res.status(500).json({ error: "No response from model" });
     }
 
-    let parsed;
-
-    try {
-      parsed = JSON.parse(content);
-    } catch {
-      const cleaned = content.replace(/```json|```/g, "");
-      parsed = JSON.parse(cleaned);
-    }
+    const cleaned = content.replace(/```json|```/g, "");
+    const parsed = JSON.parse(cleaned);
 
     return res.status(200).json(parsed);
   } catch (err) {

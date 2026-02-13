@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
-import type { AIResponse } from "../api/ai";
+import type { AIResponse } from "../../api/ai";
 
 interface ResultProps {
   data: AIResponse;
@@ -48,7 +48,7 @@ export default function Result({ data }: ResultProps) {
       updated[epicIndex] = {
         ...updated[epicIndex],
         engineeringTasks: updated[epicIndex].engineeringTasks.filter(
-          (_, i) => i !== taskIndex
+          (_, i) => i !== taskIndex,
         ),
       };
 
@@ -193,9 +193,7 @@ export default function Result({ data }: ResultProps) {
 
                   {taskIndex > 0 && (
                     <button
-                      onClick={() =>
-                        moveTaskUp(epicIndex, taskIndex)
-                      }
+                      onClick={() => moveTaskUp(epicIndex, taskIndex)}
                       className="bg-gray-200 px-2 py-1 rounded hover:bg-gray-300"
                     >
                       ↑
@@ -203,9 +201,7 @@ export default function Result({ data }: ResultProps) {
                   )}
 
                   <button
-                    onClick={() =>
-                      deleteTask(epicIndex, taskIndex)
-                    }
+                    onClick={() => deleteTask(epicIndex, taskIndex)}
                     className="bg-red-100 text-red-700 px-2 py-1 rounded hover:bg-red-200"
                   >
                     Delete

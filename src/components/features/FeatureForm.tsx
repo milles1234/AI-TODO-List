@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { saveSpec } from "../../lib/storage";
-import { generateText } from "../../api/ai";
+import { generateText } from "../../../api/ai";
 import type { FeatureSpec } from "../../types/spec";
-import type { AIResponse } from "../../api/ai";
+import type { AIResponse } from "../../../api/ai";
 import Result from "../Results"; // adjust path if needed
 
 export default function FeatureForm() {
